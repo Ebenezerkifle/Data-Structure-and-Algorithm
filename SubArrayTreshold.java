@@ -1,22 +1,16 @@
 class Solution {
-    public int subarraySum(int[] nums, int k) {
-        int totalCount=0;
-        for(int i=0; i<nums.length; i++){
-            int tempPointer=i+1;
-            int sum=nums[i];
-            if(sum==k){
-                totalCount++;
-            }
-            while(tempPointer<nums.length){
-                sum+=nums[tempPointer];
-                if(sum==k){
-                    totalCount++;
-                    break;
-                }
-                tempPointer++;
-            }
-        }
-        return totalCount;
+    public int numOfSubarrays(int[] arr, int k, int threshold) {
+        int sum=0, count=0;
+        int index;
+        for(index=0; index<k; index++) sum+=arr[index];
+        if(sum/k>=threshold) count++;
         
+        while(index<arr.length){
+            sum= sum - arr[index-k]+ arr[index];
+            if(sum/k>= threshold) count++;
+            index++;
+        }
+        
+        return count;
     }
 }
